@@ -18,6 +18,20 @@ router.get('/', async (req: Request, res: Response) => {
 
 //@TODO
 //Add an endpoint to GET a specific resource by Primary Key
+router.get('/:id', async (req: Request, res: Response) => {
+    let {id} = req.params;
+    const item = await FeedItem.findAll(id);
+    console.log(item[0].id);
+    
+    if(!item)
+    {
+        res.sendStatus(404).send("no such id");
+    }
+    const resp = item.filter((i) => {
+        return i.id == id;
+    });
+    res.send(resp);
+}); 
 
 // update a specific resource
 router.patch('/:id', 
